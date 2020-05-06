@@ -108,13 +108,14 @@ namespace Leave_management.Controllers
                 var isSucces = _repo.Update(leaveType);
                 if (!isSucces)
                 {
+                    ModelState.AddModelError("", "something went wrong...");
                     return View(model); 
                 }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                ModelState.AddModelError("", "something went wrong...");
+                
                 return View(model);
                 
             }

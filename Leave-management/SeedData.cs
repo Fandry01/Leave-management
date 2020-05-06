@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Leave_management.Data;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,22 +9,22 @@ namespace Leave_management
 {
     public static class SeedData
     {
-        public static void Seed(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public static void Seed(UserManager<Employee> userManager, RoleManager<IdentityRole> roleManager)
         {
             SeedRoles(roleManager);
             SeedUsers(userManager);
         }
-        private  static void SeedUsers(UserManager<IdentityUser> userManager) 
+        private  static void SeedUsers(UserManager<Employee> userManager) 
         {
-            if (userManager.FindByNameAsync("admin").Result == null)
+            if (userManager.FindByNameAsync("admin@localhost.com").Result == null)
             {
-                var user = new IdentityUser
+                var user = new Employee
                 {
-                    UserName = "admin",
-                    Email = "admin@localhost"
+                    UserName = "admin@localhost.com",
+                    Email = "admin@localhost.com"
                 };
-                var result = userManager.CreateAsync(user, "Password1").Result;
-                if (result.Succeeded)
+                var result = userManager.CreateAsync(user,"P@ssword1").Result;
+                if (result.Succeeded) 
                 {
                     userManager.AddToRoleAsync(user, "Administrator").Wait();
                 }
@@ -31,13 +32,11 @@ namespace Leave_management
         }
         private static void SeedRoles(RoleManager<IdentityRole> roleManager)
         {
-            if (!roleManager.RoleExistsAsync("Adminstrator").Result)
+            if (!roleManager.RoleExistsAsync("Administrator").Result)
             {
                 var role = new IdentityRole
                 {
-                    Name = "Administrator"
-
-                };
+                    Name = "Administrator"             };
                var result =  roleManager.CreateAsync(role).Result;
             }
 
