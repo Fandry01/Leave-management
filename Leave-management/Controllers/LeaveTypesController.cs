@@ -65,8 +65,8 @@ namespace Leave_management.Controllers
                 var leaveType = _mapper.Map<LeaveType>(model);
                 leaveType.DateCreated = DateTime.Now;
 
-                var succes = _repo.Create(leaveType);
-                if (!succes)
+                var IsSucces = _repo.Create(leaveType);
+                if (!IsSucces)
                 {
                     ModelState.AddModelError("","something went wrong...");
                     return View(model);
